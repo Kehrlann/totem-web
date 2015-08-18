@@ -1,2 +1,10 @@
-var toto = 8;
-var tata = 8;
+/**
+  * @jsx React.DOM
+  */
+var React = require('react');
+var TotemApp = require('./views/totem.jsx');
+
+React.render(
+  <TotemApp />,
+  document.getElementById('app')
+);

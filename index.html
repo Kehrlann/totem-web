@@ -4,8 +4,31 @@
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        
+        <link rel="stylesheet" type="text/css" href="dist/bundle.css">
+        <link rel="stylesheet" type="text/css" href="dist/bootstrap/css/bootstrap.css">
+        
     </head>
+        
     <body>
+        <div class="container-fluid">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="#">Menu</a></li>
+                    </ul>
+                </nav>
+                <h3 class="text-muted">TOTEM Mobile (PoC)</h3>
+            </div>
+            
+            <div id="app"></div>
+            
+            <footer class="footer">
+                <p> Concept by <a href="http://garnier.wf/" target="_blank">Daniel Garnier-Moiroux</a></p>
+            </footer>
+
+        </div>
+
+        <script src="dist/bundle.js"></script>
     </body>
 </html>
