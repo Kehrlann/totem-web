@@ -6,12 +6,21 @@
     "dependencies"      :   {
                                 "react"         :   "^0.13.0",
                                 "moment"        :   "^2.10.6",
-                                "d3"            :   "^3.5.6"
+                                "d3"            :   "^3.5.6",
+                                "flux"          :   "^2.0.3",
+                                "events"        :   "^1.0.2",
+                                "object-assign" :   "^3.0.0",
+                                "keymirror"     :   "^0.1.1"
                             },
     "devDependencies"   :  {
                                 "browserify"    :   "^11.0.1",
-                                "watchify"      :   "^3.3.1",
-                                "reactify"      :   "^1.1.1"
+                                "reactify"      :   "^1.1.1",
+                                "react-tools"	:   "^0.13.0",
+                                "less"          :   "^2.5.1 ",
+                                "nodemon"       :   "^1.4.1",
+                                "bootstrap"     :   "^3.3.5",
+                                "ncp"           :   "^2.0.0",
+                                "mkdirp"        :   "^0.5.1"
                             },
     "browserify"        :   {
                                 "transform" :   [
@@ -20,6 +29,16 @@
                             },
     "main"              :   "src/app.js",
     "scripts"           :   {
-                                "start"     :   "watchify -o dist/bundle.js . -v"
+                                "start"         :   "npm run bootstrap & npm run watch",
+                                "watch"         :   "npm run watch-js & npm run watch-css",
+                                "watchit"       :   "watchify -vdo dist/bundle.js .",
+                                "watch-js"      :   "nodemon --watch src --ext js,jsx --exec \"browserify -vdo dist/bundle.js .\"",
+                                "watch-css"     :   "nodemon --watch style --ext less --exec \"npm run build-less\"",
+                                "build-less"    :   "lessc style/main.less dist/bundle.css",
+                                "bootstrap"     :   "npm run mkdir-bs & npm run copy-bs-css & npm run copy-bs-js & npm run copy-bs-fonts",
+                                "mkdir-bs"      :   "mkdirp dist/bootstrap/css dist/bootstrap/js dist/bootstrap/fonts",
+                                "copy-bs-css"   :   "ncp node_modules/bootstrap/dist/css/ dist/bootstrap/css",
+                                "copy-bs-js"    :   "ncp node_modules/bootstrap/dist/js dist/bootstrap/js",
+                                "copy-bs-fonts" :   "ncp node_modules/bootstrap/dist/fonts/ dist/bootstrap/fonts/"
                             }
 }
