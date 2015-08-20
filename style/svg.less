@@ -1,7 +1,41 @@
-.toto {
-    color : blue;
-    font-weight: bold;
-    background-color: grey;
-    width: 100%;
-    height: 200px;
+.axis path, .axis line, .grid path, .grid line {
+  fill: none;
+  stroke: #777;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: 'Arial';
+  font-size: 13px;
+}
+
+.tick {
+  stroke: 1;
+}
+
+.grid {
+  stroke-dasharray: 1, 2;
+}
+
+.hover > .background {
+  fill-opacity: 0.1;
+}
+
+.active > .background {
+  fill: blue !important;
+  fill-opacity: 0.1;
+}
+
+.active.hover > .background {
+  fill-opacity: 0.2 !important;
+}
+
+.horaire, .gare {
+  font-family: "Times New Roman";
+  font-size: 12px;
+}
+
+.numero {
+  font-size: 16px;
+  font-weight: bold;
 }
