@@ -1,17 +1,37 @@
 .cartouche-enter {
   opacity: 0.01;
+  max-height: 0;
+  padding-top:0;
+  padding-bottom:0;
+  margin-top:0;
+  margin-bottom:0;
 }
 
 .cartouche-enter.cartouche-enter-active {
   opacity: 1;
-  transition: opacity .5s ease-in;
+  max-height: 600px;
+  padding-top:20px;
+  padding-bottom:20px;
+  margin-top:10px;
+  margin-bottom:20px;
+  transition:  all .5s ease-in .2s;
 }
 
 .cartouche-leave {
+  max-height: 600px;
+  padding-top:20px;
+  padding-bottom:20px;
+  margin-top:10px;
+  margin-bottom:20px;
   opacity: 1;
 }
 
 .cartouche-leave.cartouche-leave-active {
   opacity: 0.01;
-  transition: opacity .5s ease-in;
+  padding-top:0;
+  padding-bottom:0;
+  margin-top:0;
+  margin-bottom:0;
+  max-height: 0 ;
+  transition:  all .2s ease-out;
 }
