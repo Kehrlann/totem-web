@@ -24,46 +24,50 @@ var getLigneRoulementState = function()
 
 var renderLigne = function(element, trains, selectedTrain)
 {
-    var w = element.clientWidth;
 
-    var vis     =   d3  .select(element)
-                        .select(".graph")
-                        .append("svg")      .attr   ("class",   "ligneRoulement")
-                                            .attr   ("height",  "150px")
-                                            .attr   ("width",   w)
-                                            .style  ("border",  "1px solid black");
+    if(trains && trains.length >0)
+    {
+        var w = element.clientWidth;
 
-    var xAxis   =   vis     .append ("svg:g")
-                            .attr   ("class", "xAxis axis");
+        var vis     =   d3  .select(element)
+                            .select(".graph")
+                            .append("svg")      .attr   ("class",   "ligneRoulement")
+                                                .attr   ("height",  "150px")
+                                                .attr   ("width",   w)
+                                                .style  ("border",  "1px solid black");
 
-    var grid    =   vis     .append("svg:g")
-                            .attr("class", "grid");
+        var xAxis   =   vis     .append ("svg:g")
+                                .attr   ("class", "xAxis axis");
 
-    var xRange =
-            d3      .time
-                    .scale()
-                    .range([0, w])
-                    .domain([DateConstants.dateStart, DateConstants.dateEnd]);
+        var grid    =   vis     .append("svg:g")
+                                .attr("class", "grid");
 
-    var axis =
-            d3.svg  .axis()
-                    .scale(xRange)
-                    .ticks(4)
-                    .tickSize(10)
-                    .tickFormat(d3.time.format("%H:%M"));
+        var xRange =
+                d3      .time
+                        .scale()
+                        .range([0, w])
+                        .domain([DateConstants.dateStart, DateConstants.dateEnd]);
 
-    xAxis   .call(axis);
-
-    grid    .call(  d3.svg
-                        .axis()
+        var axis =
+                d3.svg  .axis()
                         .scale(xRange)
                         .ticks(4)
-                        .tickSize(150)
-                        .tickFormat("")
-            );
+                        .tickSize(10)
+                        .tickFormat(d3.time.format("%H:%M"));
 
-    renderTrains(vis, trains);
-    rescaleLigne(element, selectedTrain);
+        xAxis   .call(axis);
+
+        grid    .call(  d3.svg
+                            .axis()
+                            .scale(xRange)
+                            .ticks(4)
+                            .tickSize(150)
+                            .tickFormat("")
+                );
+
+        renderTrains(vis, trains);
+        rescaleLigne(element, selectedTrain);
+    }
 };
 
 var renderTrains = function(vis, trains)
@@ -245,6 +249,11 @@ var rescaleLigne = function(element, selectedTrain){
                     .classed("active", true);
 
     }
+    else
+    {
+        vis         .selectAll(".train")
+                    .classed("active", false);
+    }
 };
 
 
@@ -263,13 +272,18 @@ var TotemLigneRoulement = React.createClass({
         {
             trains = this.props.ligne.trains;
         }
-        renderLigne(el, trains, this.state.selectedTrain);
+        // TODO :filter crad
+        renderLigne(el, trains.filter(function(t){ return t;}), this.state.selectedTrain);
     },
 
     componentDidUpdate: function ()
     {
         var el = this.getDOMNode();
-        rescaleLigne(el, this.state.selectedTrain);
+        var trains = [];
+        if(el && this.props.ligne && this.props.ligne.trains)
+        {
+            rescaleLigne(el, this.state.selectedTrain);
+        }
     },
 
 
