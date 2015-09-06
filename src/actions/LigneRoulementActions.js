@@ -15,6 +15,15 @@ var LigneRoulementActions = {
         });
     },
 
+    loadLignes: function(lignes)
+    {
+        AppDispatcher.dispatch({
+            actionType: Constants.LIGNES_LOAD,
+            lignes: lignes
+        });
+
+    },
+
     /**
      * Sélectionner un train.
      *

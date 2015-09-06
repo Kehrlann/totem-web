@@ -21,6 +21,7 @@ var TotemApp = React.createClass({
     componentDidMount: function () {
         LigneRoulementStore.addChangeListener(this._onChange);
         window.addEventListener('resize', this._onResize);
+        LigneRoulementActions.loadForDay("2014-01-22");
     },
 
     componentWillUnmount: function () {
