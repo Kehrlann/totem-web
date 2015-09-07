@@ -17,7 +17,13 @@ var getStationList =    function(train)
                                                                         var arrivee = station.arrivee   ?   moment(station.arrivee,   DateConstants.dateFormat).format(DateConstants.timeFormat) : "-";
                                                                         var depart  = station.depart    ?   moment(station.depart,    DateConstants.dateFormat).format(DateConstants.timeFormat) : "-";
 
-                                                                        return  (   <div className="row station-row" key={station.abrege+arrivee+depart}>
+                                                                        var classString = "row station-row";
+                                                                        if(depart == arrivee)
+                                                                        {
+                                                                            classString += " nostop";
+                                                                        }
+
+                                                                        return  (   <div className={classString} key={station.abrege+arrivee+depart}>
                                                                                         <div className="col-xs-4">{station.abrege}</div>
                                                                                         <div className="col-xs-4">{arrivee}</div>
                                                                                         <div className="col-xs-4">{depart}</div>

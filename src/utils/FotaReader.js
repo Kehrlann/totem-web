@@ -2,6 +2,7 @@ var parse           =   require('./XmlParser.js');
 var moment          =   require('moment');
 var DateConstants   =   require('../constants/DateConstants.js');
 
+
 var convertObject   =   function (fotaObject)
                         {
                             var ret = [];
@@ -17,26 +18,43 @@ var convertObject   =   function (fotaObject)
                                             .forEach    (   function(train)
                                                             {
                                                                 nbrTrain++;
-                                                                var t =     {   idtrain     :   nbrTrain,
-                                                                                numero      :   train.$.NUMERO_TRANCHE_COMMERCIALE,
-                                                                                sillon      :   train.$.NUMERO_TRANCHE_COMMERCIALE,
-                                                                                type        :   "us",
-                                                                                stations    :   train   .GARES[0]
-                                                                                                        .GARE
-                                                                                                        .sort   (   function(gareA, gareB)
-                                                                                                                    {
-                                                                                                                        return gareA.$.RANG - gareB.$.RANG;
-                                                                                                                    }
-                                                                                                                )
-                                                                                                        .map    (   function(gare)
-                                                                                                                    {
-                                                                                                                        return  {   nom     :   "",
-                                                                                                                                    abrege  :   gare.CODE_GARE[0].$.TT020LIEU,
-                                                                                                                                    depart  :   gare.$.HEURE_DEPART     ? moment(gare.$.HEURE_DEPART, "hh:mm").format(DateConstants.dateFormat) : null,
-                                                                                                                                    arrivee :   gare.$.HEURE_ARRIVEE    ? moment(gare.$.HEURE_ARRIVEE, "hh:mm").format(DateConstants.dateFormat) : null
-                                                                                                                                };
-                                                                                                                    }
-                                                                                                                )
+
+                                                                var passeMinuitDepart   =   false;
+                                                                var premierHoraire      =   null;
+
+                                                                var gares = train   .GARES[0]
+                                                                                    .GARE
+                                                                                    .sort   (   function(gareA, gareB)
+                                                                                                {
+                                                                                                    return gareA.$.RANG - gareB.$.RANG;
+                                                                                                }
+                                                                                            )
+                                                                                    .map    (   function(gare)
+                                                                                                {
+                                                                                                    var s = {   nom     :   "",
+                                                                                                                abrege  :   gare.CODE_GARE[0].$.TT020LIEU,
+                                                                                                                depart  :   gare.$.HEURE_DEPART     ? moment(gare.$.HEURE_DEPART, "hh:mm") : null,
+                                                                                                                arrivee :   gare.$.HEURE_ARRIVEE    ? moment(gare.$.HEURE_ARRIVEE, "hh:mm"): null
+                                                                                                            };
+
+                                                                                                    var dateActuelle = s.arrivee != null    ?   s.arrivee
+                                                                                                                                            :   s.depart;
+
+                                                                                                    premierHoraire = premierHoraire || dateActuelle;
+
+                                                                                                    passeMinuitDepart = dateActuelle.isBefore(premierHoraire);
+
+                                                                                                    return s;
+                                                                                                }
+                                                                                            );
+
+                                                                var t =     {   idtrain             :   nbrTrain,
+                                                                                numero              :   train.$.NUMERO_TRANCHE_COMMERCIALE,
+                                                                                sillon              :   train.$.NUMERO_TRANCHE_COMMERCIALE,
+                                                                                type                :   "us",
+                                                                                passeMinuitDepart   :   passeMinuitDepart,
+                                                                                passeMinuitArrivee  :   false,
+                                                                                stations            :   gares
                                                                             };
                                                                 trainMap[t.numero] = t;
                                                             }
@@ -72,6 +90,7 @@ var convertObject   =   function (fotaObject)
                                                                                                                         }
                                                                                                                     }
                                                                                                                 )
+                                                                                                        .filter (   function(e){ return e;  }) // remove NULL and UNDEFINED
                                                                             };
                                                                 }
                                                             );

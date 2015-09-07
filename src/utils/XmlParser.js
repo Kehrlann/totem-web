@@ -9,12 +9,10 @@ var parseXml =  function(xml)
                                     {
                                         if(err)
                                         {
-                                            console.log("ERROR", err);
                                             deferred.reject(err);
                                         }
                                         else
                                         {
-                                            console.log("SUCCESS");
                                             deferred.resolve(result);
                                         }
                                     }

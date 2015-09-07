@@ -14,182 +14,12 @@ var CHANGE_EVENT = 'change';
 
 var _typesTrain = {US: "us", UM_TETE: "umt", UM_QUEUE: "umq"};
 
-var _lignesRoulement    =   [   {
-                                    "numero"    :   "1",
-                                    "trains"    :   [
-                                                        {
-                                                            idtrain: 1,
-                                                            numero: 9413,
-                                                            sillon: 9313,
-                                                            stations: [
-                                                                {
-                                                                    nom: "Paris Nord",
-                                                                    abrege: "PNO",
-                                                                    depart: moment().hours(8).minutes(1).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: null
-                                                                },
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    depart: null,
-                                                                    arrivee: moment().hours(9).minutes(23).seconds(0).format(DateConstants.dateFormat)
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        },
-                                                        {
-                                                            idtrain: 2,
-                                                            numero: 9340,
-                                                            sillon: 9340,
-                                                            stations: [
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    depart: moment().hours(13).minutes(13).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: null
-                                                                },
-                                                                {
-                                                                nom: "Paris Nord",
-                                                                abrege: "PNO",
-                                                                depart: null,
-                                                                arrivee: moment().hours(14).minutes(35).seconds(0).format(DateConstants.dateFormat)
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        },
-                                                        {
-                                                            idtrain: 3,
-                                                            numero: 9369,
-                                                            sillon: 9369,
-                                                            stations: [
-                                                                {
-                                                                    nom: "Paris Nord",
-                                                                    abrege: "PNO",
-                                                                    depart: moment().hours(17).minutes(25).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: null
-                                                                },
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    arrivee: moment().hours(18).minutes(47).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(18).minutes(51).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Anvers",
-                                                                    abrege: "ANT",
-                                                                    arrivee: moment().hours(19).minutes(27).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(19).minutes(30).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Rotterdam",
-                                                                    abrege: "RTM",
-                                                                    arrivee: moment().hours(20).minutes(2).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(20).minutes(5).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Schipol",
-                                                                    abrege: "SHX",
-                                                                    arrivee: moment().hours(20).minutes(24).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(20).minutes(29).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Amsterdam",
-                                                                    abrege: "AMS",
-                                                                    arrivee: moment().hours(20).minutes(42).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: null
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        }
-                                                    ]
-                                },
-                                {
-                                    "numero"    :   "2",
-                                    "trains"    :   [
-                                                        {
-                                                            idtrain: 4,
-                                                            numero: 9424,
-                                                            sillon: 9324,
-                                                            stations: [
-                                                                {
-                                                                    nom: "Köln",
-                                                                    abrege: "KOL",
-                                                                    depart: moment().hours(8).minutes(44).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: null
-                                                                },
-                                                                {
-                                                                    nom: "Aachen",
-                                                                    abrege: "AAC",
-                                                                    arrivee: moment().hours(9).minutes(20).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(9).minutes(25).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Liège Guillemins",
-                                                                    abrege: "LIE",
-                                                                    depart: moment().hours(9).minutes(51).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: moment().hours(9).minutes(46).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    arrivee: moment().hours(10).minutes(32).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: moment().hours(10).minutes(37).seconds(0).format(DateConstants.dateFormat)
-                                                                },
-                                                                {
-                                                                    nom: "Paris Nord",
-                                                                    abrege: "PNO",
-                                                                    arrivee: moment().hours(12).minutes(05).seconds(0).format(DateConstants.dateFormat),
-                                                                    depart: null
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        },
-                                                        {
-                                                            idtrain: 5,
-                                                            numero: 9457,
-                                                            sillon: 9357,
-                                                            stations: [{
-                                                                nom: "Paris Nord",
-                                                                abrege: "PNO",
-                                                                depart: moment().hours(15).minutes(22).seconds(0).format(DateConstants.dateFormat),
-                                                                arrivee: null
-                                                            },
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    depart: null,
-                                                                    arrivee: moment().hours(16).minutes(47).seconds(0).format(DateConstants.dateFormat)
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        },
-                                                        {
-                                                            idtrain: 6,
-                                                            numero: 9476,
-                                                            sillon: 9376,
-                                                            stations: [
-                                                                {
-                                                                    nom: "Bruxelles",
-                                                                    abrege: "BRU",
-                                                                    depart: moment().hours(19).minutes(13).seconds(0).format(DateConstants.dateFormat),
-                                                                    arrivee: null
-                                                                },
-                                                                {
-                                                                nom: "Paris Nord",
-                                                                abrege: "PNO",
-                                                                depart: null,
-                                                                arrivee: moment().hours(20).minutes(38).seconds(0).format(DateConstants.dateFormat)
-                                                                }
-                                                            ],
-                                                            type: _typesTrain.US
-                                                        }
-                                                    ]
-                                    }
-                            ];
+var _lignesRoulement    =   [];
 
 var _selectedTrainNumber    =   null;
 var _selectedTrain          =   null;
 var _selectedLigne          =   null;
+var _selectedDate           =   null;
 
 
 var LigneRoulementStore = assign({}, EventEmitter.prototype, {
@@ -209,6 +39,10 @@ var LigneRoulementStore = assign({}, EventEmitter.prototype, {
 
     getSelectedLigne: function(){
         return _selectedLigne;
+    },
+
+    getSelectedDate: function(){
+        return _selectedDate;
     },
 
     emitChange: function() {
@@ -231,7 +65,6 @@ var LigneRoulementStore = assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(function(action) {
-    var text;
 
     switch(action.actionType) {
         case LigneRoulementConstants.TRAIN_SELECT:
@@ -273,7 +106,6 @@ AppDispatcher.register(function(action) {
                 _selectedTrainNumber = null;
                 _selectedTrain = null;
                 _lignesRoulement = action.lignes;
-                console.log("LIGNES LOAD", action);
                 LigneRoulementStore.emitChange();
             }
             break;
@@ -281,32 +113,34 @@ AppDispatcher.register(function(action) {
         case LigneRoulementConstants.LOAD_FOR_DATE:
             if(action.date)
             {
-                var date = moment(action.date, DateConstants.dateFormatFromBrowser).format(DateConstants.dateFormatForFile);
-                Q       ( $.get ("data/" + date + ".xml")
+                _selectedDate = moment(action.date, DateConstants.dateFormatFromBrowser).format(DateConstants.dateFormatForFile);
+                Q       ( $.get ("data/" + _selectedDate + ".xml")
                         )
                 .then   (   function(data)
                             {
-                                console.log("load XML", data);
                                 if(data)
                                 {
                                     // ici, replace \ufeff par "" pour virer le BOM windows ?
                                     var cleared = new XMLSerializer().serializeToString(data.documentElement);
-                                    console.log("has data !");
-
                                     return ParseXml(cleared);
                                 }
                                 else
                                 {
-                                    console.log("no data !");
-
                                     return null;
                                 }
                             }
                         )
                 .then   (   function(data)
+
                             {
-                                console.log("parse XML", data);
-                                LigneRoulementActions.loadLignes(ReadFota(data));
+                                if(data)
+                                {
+                                    LigneRoulementActions.loadLignes(ReadFota(data));
+                                }
+                                else
+                                {
+                                    LigneRoulementActions.loadLignes([]);
+                                }
                             }
                         )
                 .catch  (   function(err)

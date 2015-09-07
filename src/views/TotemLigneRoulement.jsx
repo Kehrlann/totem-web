@@ -16,61 +16,58 @@ var d3parse = d3.time.format(DateConstants.d3Format).parse;
 
 var getLigneRoulementState = function()
 {
-    return  {   selectedTrain:  LigneRoulementStore.getSelectedTrain(),
-                selectedLigne:  LigneRoulementStore.getSelectedLigne()
+    return  {   selectedTrain   :   LigneRoulementStore.getSelectedTrain(),
+                selectedLigne   :   LigneRoulementStore.getSelectedLigne(),
+                selectedDate    :   LigneRoulementStore.getSelectedDate()
             };
 
 };
 
-var renderLigne = function(element, trains, selectedTrain)
+var renderLigne = function(element, trains, selectedTrain, selectedDate)
 {
+    var w = element.clientWidth;
 
-    if(trains && trains.length >0)
-    {
-        var w = element.clientWidth;
+    var vis     =   d3  .select(element)
+                        .select(".graph")
+                        .append("svg")      .attr   ("class",   "ligneRoulement")
+                                            .attr   ("height",  "150px")
+                                            .attr   ("width",   w)
+                                            .style  ("border",  "1px solid black");
 
-        var vis     =   d3  .select(element)
-                            .select(".graph")
-                            .append("svg")      .attr   ("class",   "ligneRoulement")
-                                                .attr   ("height",  "150px")
-                                                .attr   ("width",   w)
-                                                .style  ("border",  "1px solid black");
+    var xAxis   =   vis     .append ("svg:g")
+                            .attr   ("class", "xAxis axis");
 
-        var xAxis   =   vis     .append ("svg:g")
-                                .attr   ("class", "xAxis axis");
+    var grid    =   vis     .append("svg:g")
+                            .attr("class", "grid");
 
-        var grid    =   vis     .append("svg:g")
-                                .attr("class", "grid");
+    var xRange =
+            d3      .time
+                    .scale()
+                    .range([0, w])
+                    .domain([DateConstants.dateStart, DateConstants.dateEnd]);
 
-        var xRange =
-                d3      .time
-                        .scale()
-                        .range([0, w])
-                        .domain([DateConstants.dateStart, DateConstants.dateEnd]);
+    var axis =
+            d3.svg  .axis()
+                    .scale(xRange)
+                    .ticks(4)
+                    .tickSize(10)
+                    .tickFormat(d3.time.format("%H:%M"));
 
-        var axis =
-                d3.svg  .axis()
+    xAxis   .call(axis);
+
+    grid    .call(  d3.svg
+                        .axis()
                         .scale(xRange)
                         .ticks(4)
-                        .tickSize(10)
-                        .tickFormat(d3.time.format("%H:%M"));
+                        .tickSize(150)
+                        .tickFormat("")
+            );
 
-        xAxis   .call(axis);
-
-        grid    .call(  d3.svg
-                            .axis()
-                            .scale(xRange)
-                            .ticks(4)
-                            .tickSize(150)
-                            .tickFormat("")
-                );
-
-        renderTrains(vis, trains);
-        rescaleLigne(element, selectedTrain);
-    }
+    renderTrains(vis, trains, selectedDate);
+    rescaleLigne(element, selectedTrain, selectedDate);
 };
 
-var renderTrains = function(vis, trains)
+var renderTrains = function(vis, trains, selectedDate)
 {
     // Train group, starting
     var train_group = vis
@@ -112,6 +109,7 @@ var renderTrains = function(vis, trains)
             .attr("text-anchor", 'middle');
 
     // Ajouter la gare de départ
+    // TODO : PAS pour les passe-minuit
     train_group
             .append("text")
             .text(function (d, i) {
@@ -123,6 +121,7 @@ var renderTrains = function(vis, trains)
             .attr("text-anchor", 'middle');
 
     // Ajouter la gare d'arrivée
+    // TODO : PAS pour les passe-minuit
     train_group
             .append("text")
             .text(function (d, i) {
@@ -135,6 +134,7 @@ var renderTrains = function(vis, trains)
 
 
     // Ajouter l'horaire d'arrivée
+    // TODO : PAS pour les passe-minuit
     train_group
             .append("text")
             .text(function (d, i) {
@@ -147,6 +147,7 @@ var renderTrains = function(vis, trains)
 
 
     // Ajouter l'horaire d'arrivée
+    // TODO : PAS pour les passe-minuit
     train_group
             .append("text")
             .text(function (d, i) {
@@ -176,7 +177,7 @@ var renderTrains = function(vis, trains)
             });
 };
 
-var rescaleLigne = function(element, selectedTrain){
+var rescaleLigne = function(element, selectedTrain, selectedDate){
 
     var w = element.clientWidth;
 
@@ -215,10 +216,12 @@ var rescaleLigne = function(element, selectedTrain){
 
 
     var left = function (d) {
-        return xRange(d3parse(d.stations[0].depart));
+        var depart = d.passeMinuitArrivee ? DateConstants.dateStart : d.stations[0].depart;
+        return xRange(d3parse(depart.format(DateConstants.dateFormat)));
     };
     var right = function (d) {
-        return xRange(d3parse(d.stations[d.stations.length - 1].arrivee));
+        var arrivee = d.passeMinuitDepart ? DateConstants.dateEnd : d.stations[d.stations.length - 1].arrivee;
+        return xRange(d3parse(arrivee.format(DateConstants.dateFormat)));
     };
     var middle = function (d) {
         return (left(d) + right(d)) / 2;
@@ -272,18 +275,13 @@ var TotemLigneRoulement = React.createClass({
         {
             trains = this.props.ligne.trains;
         }
-        // TODO :filter crad
-        renderLigne(el, trains.filter(function(t){ return t;}), this.state.selectedTrain);
+        renderLigne(el, trains, this.state.selectedTrain, this.state.selectedDate);
     },
 
     componentDidUpdate: function ()
     {
         var el = this.getDOMNode();
-        var trains = [];
-        if(el && this.props.ligne && this.props.ligne.trains)
-        {
-            rescaleLigne(el, this.state.selectedTrain);
-        }
+        rescaleLigne(el, this.state.selectedTrain, this.state.selectedDate);
     },
 
 
@@ -294,31 +292,23 @@ var TotemLigneRoulement = React.createClass({
 
     render: function ()
     {
-        var ligne = this.props.ligne;
 
-        if(!ligne || !ligne.trains || ligne.trains.length <= 0)
+        var cartouche = null;
+
+        if (this.props.ligne.numero == this.state.selectedLigne)
         {
-            return null;
+            cartouche = <Cartouche key={this.state.selectedTrain.idtrain} train={this.state.selectedTrain} />
         }
-        else
-        {
-            var cartouche = null;
 
-            if (this.props.ligne.numero == this.state.selectedLigne)
-            {
-                cartouche = <Cartouche key={this.state.selectedTrain.idtrain} train={this.state.selectedTrain} />
-            }
+        return  (
+                    <div>
+                        <div className="graph"></div>
+                        <CSSTransitionGroup transitionName="cartouche">
+                            {cartouche}
+                        </CSSTransitionGroup>
+                    </div>
+                );
 
-            return  (
-                        <div>
-                            <div className="graph"></div>
-                            <CSSTransitionGroup transitionName="cartouche">
-                                {cartouche}
-                            </CSSTransitionGroup>
-                        </div>
-                    );
-
-        }
 
 
     }
