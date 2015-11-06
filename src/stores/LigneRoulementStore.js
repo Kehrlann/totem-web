@@ -113,14 +113,14 @@ AppDispatcher.register(function(action) {
         case LigneRoulementConstants.LOAD_FOR_DATE:
             if(action.date)
             {
-                _selectedDate = moment(action.date, DateConstants.dateFormatFromBrowser).format(DateConstants.dateFormatForFile);
-                Q       ( $.get ("data/" + _selectedDate + ".xml")
+                _selectedDate = moment(action.date, DateConstants.dateFormatFromBrowser);
+
+                Q       ( $.get ("data/" + _selectedDate.format(DateConstants.dateFormatForFile) + ".xml")
                         )
                 .then   (   function(data)
                             {
                                 if(data)
                                 {
-                                    // ici, replace \ufeff par "" pour virer le BOM windows ?
                                     var cleared = new XMLSerializer().serializeToString(data.documentElement);
                                     return ParseXml(cleared);
                                 }
@@ -145,7 +145,8 @@ AppDispatcher.register(function(action) {
                         )
                 .catch  (   function(err)
                             {
-                                console.err("ERROR - LigneRoulementStore - LOAD FOR DATE", err);
+                                console.error("ERROR - LigneRoulementStore - LOAD FOR DATE", err);
+                                LigneRoulementActions.loadLignes([]);
                             }
                         );
             }

@@ -5,6 +5,7 @@ var dateConstants = {   dateStart               :   moment().hours(0).minutes(0)
                         dateFormat              :   "YYYYMMDDHHmmss",
                         dateFormatForFile       :   "YYYY-MM-DD",
                         dateFormatFromBrowser   :   "YYYY-MM-DD",
+                        dateFormatForDisplay    :   "DD/MM/YY",
                         timeFormat              :   "HH:mm",
                         d3Format                :   "%Y%m%d%H%M%S"
                     };
