@@ -1,0 +1,166 @@
+/***********************************************************************/
+/************************
+ *  Général page        *    
+ ************************/
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow-y: scroll;
+}
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+/* Custom page header */
+.header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+.header > nav {
+  flex: 0 0 auto;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  padding-bottom: 19px;
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 50px;
+}
+/* Custom page footer */
+.footer {
+  margin-top: 19px;
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+/* Custom main content */
+#main-content {
+  padding: 0 15px;
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+.text-no-data {
+  margin-top: 20px;
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 922px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+}
+.axis path,
+.axis line,
+.grid path,
+.grid line {
+  fill: none;
+  stroke: #777;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  font-family: 'Arial';
+  font-size: 13px;
+}
+.tick {
+  stroke: 1;
+}
+.grid {
+  stroke-dasharray: 1, 2;
+}
+.hover > .background {
+  fill-opacity: 0.1;
+}
+.active > .background {
+  fill: blue !important;
+  fill-opacity: 0.1;
+}
+.active.hover > .background {
+  fill-opacity: 0.2 !important;
+}
+.horaire,
+.gare {
+  font-family: "Times New Roman";
+  font-size: 12px;
+}
+.numero {
+  font-size: 16px;
+  font-weight: bold;
+}
+.cartouche {
+  border-radius: 6px;
+  background-color: #EEE;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+.cartouche .descriptor {
+  font-weight: bold;
+}
+.station-row {
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+.station-row.nostop {
+  font-style: italic;
+  color: #888;
+}
+.btn-fermer {
+  width: 100%;
+  margin-top: 10px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.cartouche-enter {
+  opacity: 0.01;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.cartouche-enter.cartouche-enter-active {
+  opacity: 1;
+  max-height: 600px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  transition: all 0.5s ease-in 0.2s, padding-top 0.2s ease-in 0.2s;
+}
+.cartouche-leave {
+  max-height: 600px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  opacity: 1;
+}
+.cartouche-leave.cartouche-leave-active {
+  opacity: 0.01;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-height: 0 ;
+  transition: all 0.2s ease-out;
+}
