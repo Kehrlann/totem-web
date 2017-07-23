@@ -1,5 +1,5 @@
 var parseString     =   require("xml2js").parseString;
-var Q               =   require("Q");
+var Q               =   require("q");
 
 var parseXml =  function(xml)
                 {
